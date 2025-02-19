@@ -1,0 +1,56 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <h1><%= link_to "Articles", root_path, class: "navbar-brand" %></h1>    
+  </div>
+
+  <div class="navbar-right">
+  <% if current_user %>
+    <div class="profile-dropdown">
+      <% if current_user.image_url.present? %>
+        <%= image_tag(current_user.image_url, class: "profile-image", alt: "Profile") %>
+      <% else %>
+        <%= link_to "Profile", "#", class: "profile-txt", alt: "Profile" %>
+      <% end %>
+      
+      <div class="dropdown-content">
+        <%= link_to "Archived Articles", archived_articles_path %>
+        <%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+</nav>
+
+
+<div class="centered-navbar">
+  <%= render "search" %>
+  <%= link_to "+", new_article_path, class: "create-article-link", title: "Create New Article" %>
+</div>
+<br>
+
+<% unless params[:query].present? %>
+<div class="article-count">
+  <%= "Our blog has #{Article.public_count} articles and counting!" %>
+</div>
+<% end %>
+
+<ul>
+<% if @articles.present? %>
+  <% @articles.each do |article| %>
+    <% unless article.archived? %>
+      <li>
+        <%= link_to article.title, article, class: 'article-link' %>
+        <p class="article-snippet"><%= truncate(article.body, length: 200, separator: ' ') %></p>
+      </li>
+    <% end %>
+  <% end %>
+<%else %>
+ <li>No articles found.</li>
+<% end %>
+</ul>
+<br>
+<%= paginate @articles, class: 'pagination' %>
+<br>
+
+

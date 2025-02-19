@@ -1,0 +1,6 @@
+<%= form_with(url: articles_path, method: :get, class: "search-form") do |form| %>
+    <%= form.label :query, "Search Articles", class: "search-label" %>
+    <%= form.text_field :query, value: params[:query], placeholder: "Search by title", class: "search-input" %>
+    <%= form.submit "Search", class: "search-button" %>
+  <% end %>
+  

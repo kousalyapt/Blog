@@ -1,0 +1,31 @@
+<%= form_with model: article, class: "article-form" do |form| %>
+  <div class="form-group">
+    <%= form.label :title, class: "form-label" %><br>
+    <%= form.text_field :title, class: "form-input" %>
+    <% article.errors.full_messages_for(:title).each do |message| %>
+      <div class="error-message"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :body, class: "form-label" %><br>
+    <%= form.text_area :body, class: "form-textarea" %>
+    <% article.errors.full_messages_for(:body).each do |message| %>
+      <div class="error-message"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :documents, "Attach Documents", class: "form-label" %><br>
+    <%= form.file_field :documents, multiple: true, class: "form-file-input" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :status, class: "form-label" %><br>
+    <%= form.select :status, Visible::VALID_STATUSES, selected: article.status || 'public', class: "form-select" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.submit "Submit", class: "form-submit-button" %>
+  </div>
+<% end %>

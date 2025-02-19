@@ -1,0 +1,39 @@
+<%= link_to "Back to Home", root_path ,class: 'back-button'%>
+
+<h1><%= @article.title %></h1>
+
+<div class="dropdown-container">
+  <button class="dropdown-toggle">...</button>
+  <div class="dropdown-menu">
+  <ul>
+    <li><%= link_to "Edit", edit_article_path(@article), class: 'dropdown-link' %></li>
+    <li><%= link_to "Destroy", article_path(@article), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    }, class: 'dropdown-link' %>
+                    </li>
+  </ul>
+  </div>
+</div>
+
+<p><%= @article.body %></p>
+
+
+<% if @article.documents.attached? %>
+
+  <% @article.documents.each do |document| %>
+    
+      <%= image_tag url_for(document), class: 'document-image', alt: document.filename %>
+    
+  <% end %>
+
+<% end %>
+
+
+
+
+<h2>Comments <%= @article.comments.count %></h2>
+
+<%= render @article.comments %>
+
+<%= render "comments/form" , article: @article %>

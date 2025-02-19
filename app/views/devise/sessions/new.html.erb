@@ -1,0 +1,47 @@
+
+<div class="login-container">
+<h2>Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "current-password" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="rem-field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Log in" %>
+  </div>
+
+  <p>or</p>
+
+  <div class="social-login">
+  <%= link_to image_tag('google_logo.png', alt: 'Sign in with Google'), users_google_oauth2_path, class: 'social-icon' %> 
+  <%= link_to image_tag('linkedin_logo.png', alt: 'Sign in with LinkedIn'), users_linkedin_path, class: 'social-icon' %>
+  <%= link_to image_tag('github_logo.png', alt: 'Sign in with GitHub'), users_github_path, class: 'social-icon' %>
+  </div>
+  
+
+
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+  <%= link_to "Forgot your password?", new_password_path(resource_name), class: 'forgot-password-link' %><br />
+<% end %>
+
+
+<% end %>
+</div>
+
+
+
+<%= render "devise/shared/links" %>
